@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block incontent %}
+    <h1>{% block title %} Про исследование {% endblock %}</h1>
+{% endblock %}
+
+{% block text_first %}
+{% endblock %}
+
+{% block text_image_first %}
+    Аватарочка
+    <br>
+    <img src="static/images/logo.jpg" alt="Logoа" class="rounded float-left"
+    width="200" height="200">
+{% endblock %}
+
+{% block text_second %}
+    <h4 style="color:#307059"><u>Информация о создании этого исследования</u></h4>
+    <h5 style="color:#3a876b">Когда-то очень давно на первом курсе нам рассказывали и показывали много прикольных каналов в Telegram, в которых рассказывается про разные лингво-штучки.<br>
+        Из всех предложенных каналов мне больше всего понравился <a href="https://t.me/UznalSlovo" class="link-secondary"><u>Узнал новое слово</u></a>.<br>
+        <br>
+        В данном канале каждый день публикуется одно слово и опрос, встречали ли его подписчики этого канала. В конце месяца делается сводка самых часто/редко встречающихся слов.<br>
+        <br>
+        А вот что пишет сам создатель этого канала:<br>
+        "Добро пожаловать! Я, лингвист Борис Иомдин (<a href="https://www.ruslang.ru/" class="link-secondary"><u>Институт русского языка им. В. В. Виноградова РАН</u></a>, <a href="https://www.yandex.ru/" class="link-secondary"><u>Яндекс</u></a>), каждый день публикую здесь новое русское слово, которое я узнал в этот день, а вы голосуете, знаете ли вы его."
+    </h5>
+{% endblock %}
+
+{% block text_image_second %}
+    Статистика за ноябрь 2022
+    <br>
+    <img src="static/images/stat_nov_2022.jpg" alt="Статистика за ноябрь 2022" class="rounded float-right"
+    width="200" height="200">
+{% endblock %}
+
+{% block text_third %}
+    <h4 style="color:#307059"><u>Как будет проводиться исследование?</u></h4>
+    <h5 style="color:#3a876b"> Я выберу 15 слов, которые мне кажутся интересными, и предложения с ними  и дам вам возможность указать, встречались ли они вам!<br>
+        Будьте внимательны! Мне важно знать, встречали ли Вы данное слово в повседневной жизни, а не догадываетесь ли Вы о смысле.
+    </h5>
+    <a href="/anketa" class="link-secondary"><h4 style="color:#679e8b"><u>Анкета здесь!</u></h4></a>
+{% endblock %}

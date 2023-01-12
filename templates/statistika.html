@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Статистика
+{% endblock %}
+
+{% block incontent %}
+    <h3>Статистика на данный момент:</h3>
+{% endblock %}
+
+{% block text_first %}
+    <div class="container">
+        <h4 style="color:#307059">О респондентах:</h4>
+      <div class="row">
+
+        <div class="col-sm-3">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{{ all_stat['total_count'] }}</h5>
+              <p class="card-text">Всего опрос прошло</p>
+            </div>
+          </div>
+        </div>
+
+          <div class="col-sm-3">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{{ all_stat['women'] }}</h5>
+              <p class="card-text">Женщин</p>
+            </div>
+          </div>
+        </div>
+
+          <div class="col-sm-3">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{{ all_stat['men'] }}</h5>
+              <p class="card-text">Мужчин</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock %}
+
+{% block text_second %}
+    <div class="container">
+      <div class="row">
+
+        <div class="col-sm-3">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{{ all_stat['age_mean'] }}</h5>
+              <p class="card-text">Средний возраст</p>
+            </div>
+          </div>
+        </div>
+
+          <div class="col-sm-3">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{{ all_stat['age_min'] }}</h5>
+              <p class="card-text">Минимальный возраст</p>
+            </div>
+          </div>
+        </div>
+
+          <div class="col-sm-3">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{{ all_stat['age_max'] }}</h5>
+              <p class="card-text">Максимальный возраст</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock %}
+
+{% block text_third %}
+    <h4>Статистика ответиков:</h4>
+    {% for question in questions %}
+        <div class="table-responsive-sm">
+            <table class="table table-sm">
+                <thead>
+                    <tr class="table-success">
+                         {% if question.question_text.startswith('Ваши комментарии') %}
+                         {% else %}
+                            <th scope="col"><h5>{{ question.question_text }}</h5></th>
+                         {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for option in all_ans[question.question_id] %}
+                        <tr>
+                            <th scope="row"><h6>{{ option }}:</h6></th>
+                            <td class="align-text-bottom"><h4>{{ all_ans[question.question_id][option] }}</h4></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endfor %}
+{% endblock %}

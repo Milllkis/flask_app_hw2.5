@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block incontent %}
+    <h1>{% block title %} Анкета {% endblock %}</h1>
+{% endblock %}
+
+{% block text_first %}
+    <form class="container" action="/process">
+        <h4>Начнём с самого простого, расскажите немного о себе:</h4>
+        <div class="form-row">
+            <div class="col">
+                <label>Как Вас зовут?</label>
+                <input type="text" class="form-control" id="validationServer01" placeholder="Имя" name="Name" required>
+            </div>
+            <div class="form-group col-md-2">
+                <label>Сколько Вам лет?</label>
+                <input type="text" class="form-control" id="validationServer03" placeholder="Возраст" name="Age" required>
+            </div>
+            <div class="form-group col-md-2">
+                <label>Ваш пол?</label>
+                    <select class="custom-select" id="validationServer04" name="Gender" required>
+                        <option selected>Пол:</option>
+                        <option value="1">Мужской</option>
+                        <option value="2">Женский</option>
+                        <option value="3">Другое</option>
+                    </select>
+            </div>
+        </div>
+        <br>
+        <div class="form-row">
+            <div class="form-group col">
+                <label>Ваш родной язык?</label>
+                <input type="text" class="form-control" id="validationServer05" placeholder="Язык" name="Language" required>
+            </div>
+        </div>
+        <h4 style="color:#307059">Перейдём к опросу!</h4>
+        <h5 style="color:#3a876b">Ниже вы увидите несколько разных примеров. В каждом примере выделено слово, значение которого вы должны предположить, а также указать, встречали ли вы это слово в вашей жизни<br>
+            Если у вас нет комментариев, то поставьте прочерк в последнем вопросе, пожалуйста.<br>
+            <br>
+            <i>Большая просьба не оставлять пустыми поля и не переходить на другие вкладки, так как форма может сломаться.<br>
+                <br>
+            </i>
+            <br>
+        </h5>
+        {% for question in questions %}
+            <div class="row">
+                <p class="col-sm-15"><h5>{{question.question_text}}</h5></p>
+                {% if question.question_text.startswith('Ваши комментарии') %}
+                    <input type="text" class="form-control" id="validationServer08" placeholder="Ответ" name="q{{ question.question_id }}" required>
+                {% else %}
+                    <table class="col-md-8">
+                        <select class="form-control" name="q{{ question.question_id }}" style="width:400px;">
+                            <option selected>Тыкните, чтобы указать Ваш ответ:</option>
+                            <option value="1">Точно встречалось</option>
+                            <option value="2">Кажется, попадалось</option>
+                            <option value="3">Впервые вижу</option>
+                        </select>
+                        <br>
+                    </table>
+                {% endif %}
+            </div>
+        {% endfor %}
+            <br>
+            <button type="submit" class="btn btn-outline-success" name="submit">Сохранить ответ</button>
+		</form>
+{% endblock %}

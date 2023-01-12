@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block incontent %}
+    <h1>{% block title %} Спасибо! {% endblock %}</h1>
+{% endblock %}
+
+{% block text_first %}
+    <h5 style="color:#3a876b">Я очень благодарна Вам, что Вы прошли мое (и не очень мое) исследование!<br>
+        <br>
+        Если у вас есть вопросы, то вы всегда можете мне написать. Контакты указаны внизу!<br>
+        <br>
+        Если вам интересны результаты, то по ссылке ниже можно узнать текущую статистику исследования.<br>
+    </h5>
+{% endblock %}
+
+{% block text_second %}
+    <a href="/statistics" class="link-secondary"><h4 style="color:#307059"><u>Статистика!</u></h4></a>
+{% endblock %}
