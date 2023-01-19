@@ -33,17 +33,7 @@ class Answers(db.Model):
     q3 = db.Column('anwer_3', db.Integer)
     q4 = db.Column('anwer_4', db.Integer)
     q5 = db.Column('anwer_5', db.Integer)
-    q6 = db.Column('anwer_6', db.Integer)
-    q7 = db.Column('anwer_7', db.Integer)
-    q8 = db.Column('anwer_8', db.Integer)
-    q9 = db.Column('anwer_9', db.Integer)
-    q10 = db.Column('anwer_10', db.Integer)
-    q11 = db.Column('anwer_11', db.Integer)
-    q12 = db.Column('anwer_12', db.Integer)
-    q13 = db.Column('anwer_13', db.Integer)
-    q14 = db.Column('anwer_14', db.Integer)
-    q15 = db.Column('anwer_15', db.Integer)
-    q16 = db.Column('anwer_16', db.Text)
+    q6 = db.Column('anwer_6', db.Text)
 
 
 db.init_app(app)
@@ -71,10 +61,7 @@ def index():
 def question_page():
     questions = Questions.query.all()
 
-    return render_template(
-        'anketa.html',
-        questions=questions
-    )
+    return render_template('anketa.html', questions=questions)
 
 
 @app.route('/process', methods=['get'])
@@ -104,19 +91,8 @@ def answer_anketa():
     q4 = request.args.get('q4')
     q5 = request.args.get('q5')
     q6 = request.args.get('q6')
-    q7 = request.args.get('q7')
-    q8 = request.args.get('q8')
-    q9 = request.args.get('q9')
-    q10 = request.args.get('q10')
-    q11 = request.args.get('q11')
-    q12 = request.args.get('q12')
-    q13 = request.args.get('q13')
-    q14 = request.args.get('q14')
-    q15 = request.args.get('q15')
-    q16 = request.args.get('q16')
 
-    answer = Answers(answer_id=user.user_id, q1=q1, q2=q2, q3=q3, q4=q4, q5=q5, q6=q6, q7=q7, q8=q8, q9=q9, q10=q10,
-                     q11=q11, q12=q12, q13=q13, q14=q14, q15=q15, q16=q16)
+    answer = Answers(answer_id=user.user_id, q1=q1, q2=q2, q3=q3, q4=q4, q5=q5, q6=q6)
 
     db.session.add(answer)
     db.session.commit()
@@ -127,11 +103,7 @@ def answer_anketa():
 @app.route('/statistics')
 def statistics():
     all_stat = {}
-    age_stats = db.session.query(
-        func.avg(User.user_age),
-        func.min(User.user_age),
-        func.max(User.user_age)
-    ).one()
+    age_stats = db.session.query(func.avg(User.user_age), func.min(User.user_age), func.max(User.user_age)).one()
     all_stat['age_mean'] = age_stats[0]
     all_stat['age_min'] = age_stats[1]
     all_stat['age_max'] = age_stats[2]
@@ -159,197 +131,62 @@ def statistics():
     }
 
     ans_q = {}
-    ans = db.session.query(Answers.q1).group_by(Answers.q1).all()
-    countik = db.session.query(db.func.count(Answers.q1)).group_by(Answers.q1).all()
+    answ = db.session.query(Answers.q1).group_by(Answers.q1).all()
+    scet = db.session.query(db.func.count(Answers.q1)).group_by(Answers.q1).all()
     n = 0
-    for i in ans:
+    for i in answ:
         i = int(str(i)[1])
-        option_select = options[i]
-        stat = str(countik[n]).replace(',)', '')
-        stat = stat.replace('(', '')
-        ans_q[option_select] = stat
+        selected = options[i]
+        stat = str(scet[n]).replace(',)', '').replace('(', '')
+        ans_q[selected] = stat
         n += 1
     all_ans.append(ans_q)
 
     ans_q = {}
-    ans = db.session.query(Answers.q2).group_by(Answers.q2).all()
-    countik = db.session.query(db.func.count(Answers.q2)).group_by(Answers.q2).all()
+    answ = db.session.query(Answers.q2).group_by(Answers.q2).all()
+    scet = db.session.query(db.func.count(Answers.q2)).group_by(Answers.q2).all()
     n = 0
-    for i in ans:
+    for i in answ:
         i = int(str(i)[1])
-        option_select = options[i]
-        stat = str(countik[n]).replace(',)', '')
-        stat = stat.replace('(', '')
-        ans_q[option_select] = stat
+        selected = options[i]
+        stat = str(scet[n]).replace(',)', '').replace('(', '')
+        ans_q[selected] = stat
         n += 1
     all_ans.append(ans_q)
 
     ans_q = {}
-    ans = db.session.query(Answers.q3).group_by(Answers.q3).all()
-    countik = db.session.query(db.func.count(Answers.q3)).group_by(Answers.q3).all()
+    answ = db.session.query(Answers.q3).group_by(Answers.q3).all()
+    scet = db.session.query(db.func.count(Answers.q3)).group_by(Answers.q3).all()
     n = 0
-    for i in ans:
+    for i in answ:
         i = int(str(i)[1])
-        option_select = options[i]
-        stat = str(countik[n]).replace(',)', '')
-        stat = stat.replace('(', '')
-        ans_q[option_select] = stat
+        selected = options[i]
+        stat = str(scet[n]).replace(',)', '').replace('(', '')
+        ans_q[selected] = stat
         n += 1
     all_ans.append(ans_q)
 
     ans_q = {}
-    ans = db.session.query(Answers.q4).group_by(Answers.q4).all()
-    countik = db.session.query(db.func.count(Answers.q4)).group_by(Answers.q4).all()
+    answ = db.session.query(Answers.q4).group_by(Answers.q4).all()
+    scet = db.session.query(db.func.count(Answers.q4)).group_by(Answers.q4).all()
     n = 0
-    for i in ans:
+    for i in answ:
         i = int(str(i)[1])
-        option_select = options[i]
-        stat = str(countik[n]).replace(',)', '')
-        stat = stat.replace('(', '')
-        ans_q[option_select] = stat
+        selected = options[i]
+        stat = str(scet[n]).replace(',)', '').replace('(', '')
+        ans_q[selected] = stat
         n += 1
     all_ans.append(ans_q)
 
     ans_q = {}
-    ans = db.session.query(Answers.q5).group_by(Answers.q5).all()
-    countik = db.session.query(db.func.count(Answers.q5)).group_by(Answers.q5).all()
+    answ = db.session.query(Answers.q5).group_by(Answers.q5).all()
+    scet = db.session.query(db.func.count(Answers.q5)).group_by(Answers.q5).all()
     n = 0
-    for i in ans:
+    for i in answ:
         i = int(str(i)[1])
-        option_select = options[i]
-        stat = str(countik[n]).replace(',)', '')
-        stat = stat.replace('(', '')
-        ans_q[option_select] = stat
-        n += 1
-    all_ans.append(ans_q)
-
-    ans_q = {}
-    ans = db.session.query(Answers.q6).group_by(Answers.q6).all()
-    countik = db.session.query(db.func.count(Answers.q6)).group_by(Answers.q6).all()
-    n = 0
-    for i in ans:
-        i = int(str(i)[1])
-        option_select = options[i]
-        stat = str(countik[n]).replace(',)', '')
-        stat = stat.replace('(', '')
-        ans_q[option_select] = stat
-        n += 1
-    all_ans.append(ans_q)
-
-    ans_q = {}
-    ans = db.session.query(Answers.q7).group_by(Answers.q7).all()
-    countik = db.session.query(db.func.count(Answers.q7)).group_by(Answers.q7).all()
-    n = 0
-    for i in ans:
-        i = int(str(i)[1])
-        option_select = options[i]
-        stat = str(countik[n]).replace(',)', '')
-        stat = stat.replace('(', '')
-        ans_q[option_select] = stat
-        n += 1
-    all_ans.append(ans_q)
-
-    ans_q = {}
-    ans = db.session.query(Answers.q8).group_by(Answers.q8).all()
-    countik = db.session.query(db.func.count(Answers.q8)).group_by(Answers.q8).all()
-    n = 0
-    for i in ans:
-        i = int(str(i)[1])
-        option_select = options[i]
-        stat = str(countik[n]).replace(',)', '')
-        stat = stat.replace('(', '')
-        ans_q[option_select] = stat
-        n += 1
-    all_ans.append(ans_q)
-
-    ans_q = {}
-    ans = db.session.query(Answers.q9).group_by(Answers.q9).all()
-    countik = db.session.query(db.func.count(Answers.q9)).group_by(Answers.q9).all()
-    n = 0
-    for i in ans:
-        i = int(str(i)[1])
-        option_select = options[i]
-        stat = str(countik[n]).replace(',)', '')
-        stat = stat.replace('(', '')
-        ans_q[option_select] = stat
-        n += 1
-    all_ans.append(ans_q)
-
-    ans_q = {}
-    ans = db.session.query(Answers.q10).group_by(Answers.q10).all()
-    countik = db.session.query(db.func.count(Answers.q10)).group_by(Answers.q10).all()
-    n = 0
-    for i in ans:
-        i = int(str(i)[1])
-        option_select = options[i]
-        stat = str(countik[n]).replace(',)', '')
-        stat = stat.replace('(', '')
-        ans_q[option_select] = stat
-        n += 1
-    all_ans.append(ans_q)
-
-    ans_q = {}
-    ans = db.session.query(Answers.q11).group_by(Answers.q11).all()
-    countik = db.session.query(db.func.count(Answers.q11)).group_by(Answers.q11).all()
-    n = 0
-    for i in ans:
-        i = int(str(i)[1])
-        option_select = options[i]
-        stat = str(countik[n]).replace(',)', '')
-        stat = stat.replace('(', '')
-        ans_q[option_select] = stat
-        n += 1
-    all_ans.append(ans_q)
-
-    ans_q = {}
-    ans = db.session.query(Answers.q12).group_by(Answers.q12).all()
-    countik = db.session.query(db.func.count(Answers.q12)).group_by(Answers.q12).all()
-    n = 0
-    for i in ans:
-        i = int(str(i)[1])
-        option_select = options[i]
-        stat = str(countik[n]).replace(',)', '')
-        stat = stat.replace('(', '')
-        ans_q[option_select] = stat
-        n += 1
-    all_ans.append(ans_q)
-
-    ans_q = {}
-    ans = db.session.query(Answers.q13).group_by(Answers.q13).all()
-    countik = db.session.query(db.func.count(Answers.q13)).group_by(Answers.q13).all()
-    n = 0
-    for i in ans:
-        i = int(str(i)[1])
-        option_select = options[i]
-        stat = str(countik[n]).replace(',)', '')
-        stat = stat.replace('(', '')
-        ans_q[option_select] = stat
-        n += 1
-    all_ans.append(ans_q)
-
-    ans_q = {}
-    ans = db.session.query(Answers.q14).group_by(Answers.q14).all()
-    countik = db.session.query(db.func.count(Answers.q14)).group_by(Answers.q14).all()
-    n = 0
-    for i in ans:
-        i = int(str(i)[1])
-        option_select = options[i]
-        stat = str(countik[n]).replace(',)', '')
-        stat = stat.replace('(', '')
-        ans_q[option_select] = stat
-        n += 1
-    all_ans.append(ans_q)
-
-    ans_q = {}
-    ans = db.session.query(Answers.q15).group_by(Answers.q15).all()
-    countik = db.session.query(db.func.count(Answers.q15)).group_by(Answers.q15).all()
-    n = 0
-    for i in ans:
-        i = int(str(i)[1])
-        option_select = options[i]
-        stat = str(countik[n]).replace(',)', '')
-        stat = stat.replace('(', '')
-        ans_q[option_select] = stat
+        selected = options[i]
+        stat = str(scet[n]).replace(',)', '').replace('(', '')
+        ans_q[selected] = stat
         n += 1
     all_ans.append(ans_q)
 
