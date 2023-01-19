@@ -49,7 +49,7 @@
                     <input type="text" class="form-control" id="validationServer08" placeholder="Ответ" name="q{{ question.question_id }}" required>
                 {% else %}
                     <table class="col-md-8">
-                        <select class="form-control" name="q{{ question.question_id }}" style="width:400px;">
+                        <select class="custom-select" name="q{{ question.question_id }}" style="width:400px;">
                             <option selected>Тыкните, чтобы указать Ваш ответ:</option>
                             <option value="1">Точно встречалось</option>
                             <option value="2">Кажется, попадалось</option>
